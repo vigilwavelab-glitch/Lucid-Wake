@@ -51,6 +51,10 @@
             pointer-events: none; z-index: 9999; opacity: 0.04;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
+		/* 添加此類別 */
+        .disable-webgl-events {
+            pointer-events: none !important;
+        }
 
         /* Custom Cursor */
         .cursor-dot {
@@ -728,12 +732,18 @@
         const modal = document.getElementById(modalId);
         modal.classList.add('active');
         lenis.stop(); // Pause smooth scrolling
+		document.getElementById('webgl-canvas').classList.add('disable-webgl-events');
+		// 如果是導覽模式 (guide-modal)，預設顯示第一個分頁
+        if (modalId === 'guide-modal') {
+            showTab('guide-intro'); // 確保打開時顯示第一個tab
+    }
     }
 
     function closeModal(modalId) {
         const modal = document.getElementById(modalId);
         modal.classList.remove('active');
         lenis.start(); // Resume smooth scrolling
+		document.getElementById('webgl-canvas').classList.remove('disable-webgl-events');
     }
 
     // Close modal on clicking outside
